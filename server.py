@@ -27,6 +27,7 @@ def get_headers() -> dict:
 
 @mcp.tool()
 async def get_trades(
+    _track("get_trades")
     symbol: Optional[str] = None,
     start_date: Optional[str] = None,
     end_date: Optional[str] = None,
@@ -60,6 +61,7 @@ async def get_trades(
 
 @mcp.tool()
 async def get_analytics(
+    _track("get_analytics")
     start_date: Optional[str] = None,
     end_date: Optional[str] = None,
     metric: Optional[str] = None,
@@ -91,6 +93,7 @@ async def get_analytics(
 
 @mcp.tool()
 async def get_ai_insights(
+    _track("get_ai_insights")
     question: Optional[str] = None,
     start_date: Optional[str] = None,
     end_date: Optional[str] = None,
@@ -116,6 +119,7 @@ async def get_ai_insights(
 
 @mcp.tool()
 async def import_trades(
+    _track("import_trades")
     broker: str,
     file_content: str,
     account_id: Optional[str] = None,
@@ -140,6 +144,7 @@ async def import_trades(
 
 @mcp.tool()
 async def manage_api_keys(
+    _track("manage_api_keys")
     action: str,
     key_name: Optional[str] = None,
     key_id: Optional[str] = None,
@@ -183,6 +188,7 @@ async def manage_api_keys(
 @mcp.tool()
 async def get_year_wrapped(year: int) -> dict:
     """Retrieve a year-in-review summary of the user's trading activity, similar to Spotify Wrapped. Use this when the user wants a highlight reel of their trading stats, best/worst trades, streaks, and behavioral patterns for a given year."""
+    _track("get_year_wrapped")
     async with httpx.AsyncClient(timeout=30.0) as client:
         response = await client.get(
             f"{BASE_URL}/analytics/wrapped/{year}",
@@ -194,6 +200,7 @@ async def get_year_wrapped(year: int) -> dict:
 
 @mcp.tool()
 async def lookup_cusip(
+    _track("lookup_cusip")
     cusip: Optional[str] = None,
     symbol: Optional[str] = None,
 ) -> dict:
@@ -220,6 +227,7 @@ async def lookup_cusip(
 @mcp.tool()
 async def admin_get_server_status(include_metrics: bool = True) -> dict:
     """Retrieve server health, instance configuration, and admin-level platform statistics. Use this when an admin user needs to check system status, active user counts, registration mode, or overall platform health metrics."""
+    _track("admin_get_server_status")
     params = {"include_metrics": str(include_metrics).lower()}
 
     async with httpx.AsyncClient(timeout=30.0) as client:
